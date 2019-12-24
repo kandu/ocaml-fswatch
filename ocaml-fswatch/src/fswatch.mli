@@ -70,11 +70,7 @@ module Filter : sig
   }
 end
 
-type handle = {
-  session : nativeint;
-  callback : Event.callback;
-  mutable alive : bool;
-}
+type handle
 
 val init_library : unit -> Status.t
 val init_session : Monitor.t -> Event.callback -> handle
@@ -91,6 +87,8 @@ val start_monitor_thread : handle -> Thread.t
 val stop_monitor : handle -> Status.t
 val is_running : handle -> bool
 val destroy_session : handle -> Status.t
+val last_status : handle -> Status.t
+
 val last_error : unit -> Status.t
 val is_verbose : unit -> bool
 val set_verbose : bool -> unit
