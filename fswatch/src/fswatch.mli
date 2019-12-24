@@ -77,19 +77,19 @@ type handle
 
 val init_library : unit -> Status.t
 val init_session : Monitor.t -> Event.callback -> handle
-val add_path : handle -> string -> Status.t
-val add_property : handle -> name:string -> value:string -> Status.t
-val set_allow_overflow : handle -> bool -> Status.t
-val set_recursive : handle -> bool -> Status.t
-val set_directory_only : handle -> bool -> Status.t
-val set_follow_symlinks : handle -> bool -> Status.t
-val add_event_type_filter : handle -> Filter.event_type_filter -> Status.t
-val add_filter : handle -> Filter.monitor_filter -> Status.t
-val start_monitor : handle -> Status.t
+val add_path : handle -> string -> unit
+val add_property : handle -> name:string -> value:string -> unit
+val set_allow_overflow : handle -> bool -> unit
+val set_recursive : handle -> bool -> unit
+val set_directory_only : handle -> bool -> unit
+val set_follow_symlinks : handle -> bool -> unit
+val add_event_type_filter : handle -> Filter.event_type_filter -> unit
+val add_filter : handle -> Filter.monitor_filter -> unit
+val start_monitor : handle -> unit
 val start_monitor_thread : handle -> Thread.t
-val stop_monitor : handle -> Status.t
+val stop_monitor : handle -> unit
 val is_running : handle -> bool
-val destroy_session : handle -> Status.t
+val destroy_session : handle -> unit
 val last_status : handle -> Status.t
 
 val last_error : unit -> Status.t

@@ -59,58 +59,48 @@ let init_library ()=
 
 let add_path handle path=
   handle.last_status <- Stub.FSW.add_path handle.session path
-    |> Stub.Status.t_of_int;
-  handle.last_status
+    |> Stub.Status.t_of_int
 
 let add_property handle ~name ~value=
   handle.last_status <- Stub.FSW.add_property handle.session ~name ~value
-    |> Stub.Status.t_of_int;
-  handle.last_status
+    |> Stub.Status.t_of_int
 
 let set_allow_overflow handle allow=
   handle.last_status <- Stub.FSW.set_allow_overflow handle.session allow
-    |> Stub.Status.t_of_int;
-  handle.last_status
+    |> Stub.Status.t_of_int
 
 let set_recursive handle recursive=
   handle.last_status <- Stub.FSW.set_recursive handle.session recursive
-    |> Stub.Status.t_of_int;
-  handle.last_status
+    |> Stub.Status.t_of_int
 
 let set_directory_only handle directory_only=
   handle.last_status <-
     Stub.FSW.set_directory_only
       handle.session
       directory_only
-    |> Stub.Status.t_of_int;
-  handle.last_status
+    |> Stub.Status.t_of_int
 
 let set_follow_symlinks handle follow=
   handle.last_status <- Stub.FSW.set_follow_symlinks handle.session follow
-    |> Stub.Status.t_of_int;
-  handle.last_status
+    |> Stub.Status.t_of_int
 
 let add_event_type_filter handle filter=
   handle.last_status <- Stub.FSW.add_event_type_filter handle.session filter
-    |> Stub.Status.t_of_int;
-  handle.last_status
+    |> Stub.Status.t_of_int
 
 let add_filter handle filter=
   handle.last_status <- Stub.FSW.add_filter handle.session filter
-    |> Stub.Status.t_of_int;
-  handle.last_status
+    |> Stub.Status.t_of_int
 
 let start_monitor handle=
   handle.last_status <- Stub.FSW.start_monitor handle.session
-    |> Stub.Status.t_of_int;
-  handle.last_status
+    |> Stub.Status.t_of_int
 
 let start_monitor_thread handle= Thread.create start_monitor handle
 
 let stop_monitor handle=
   handle.last_status <- Stub.FSW.stop_monitor handle.session
-    |> Stub.Status.t_of_int;
-  handle.last_status
+    |> Stub.Status.t_of_int
 
 let is_running handle= Stub.FSW.is_running handle.session
 let destroy_session handle=
@@ -118,10 +108,8 @@ let destroy_session handle=
     (handle.last_status <- Stub.FSW.destroy_session handle.session
       |> Stub.Status.t_of_int;
     handle.alive <- false;
-    SessionMap.remove sessions handle.session;
-    handle.last_status)
-  else
-    FSW_OK
+    SessionMap.remove sessions handle.session
+    )
 
 let init_session monitor callback=
   let session= Stub.FSW.init_session monitor in
@@ -132,8 +120,7 @@ let init_session monitor callback=
     last_status= Status.FSW_OK
   } in
   SessionMap.replace sessions session handle;
-  let destroy session= ignore (destroy_session session:Status.t) in
-  Gc.finalise destroy handle;
+  Gc.finalise destroy_session handle;
   handle
 
 let last_error ()= Stub.FSW.last_error () |> Stub.Status.t_of_int
