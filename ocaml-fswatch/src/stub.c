@@ -57,7 +57,7 @@ CAMLprim FSW_STATUS fsw_init_library_stub() {
 CAMLprim value fsw_init_session_stub(value type) {
     CAMLparam1(type);
     FSW_HANDLE session= fsw_init_session(Int_val(type));
-    FSW_STATUS status= fsw_set_callback(
+    fsw_set_callback(
         session,
         cevent_callback,
         (void*)session);
