@@ -5,3 +5,4 @@ let init_session monitor=
   in
   (Fswatch.init_session monitor callback, mbox)
 
+let start_monitor= Lwt_preemptive.detach Fswatch.start_monitor
