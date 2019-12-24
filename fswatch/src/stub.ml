@@ -117,11 +117,59 @@ module Event = struct
     if n = 1 lsl 13 then Overflow          else
       failwith "flag_of_int"
 
+  let flag_to_string= function
+    | NoOp-> "NoOp"
+    | PlatformSpecific-> "PlatformSpecific"
+    | Created-> "Created"
+    | Updated-> "Updated"
+    | Removed-> "Removed"
+    | Renamed-> "Renamed"
+    | OwnerModified-> "OwnerModified"
+    | AttributeModified-> "AttributeModified"
+    | MovedFrom-> "MovedFrom"
+    | MovedTo-> "MovedTo"
+    | IsFile-> "IsFile"
+    | IsDir-> "IsDir"
+    | IsSymLink-> "IsSymLink"
+    | Link-> "Link"
+    | Overflow-> "Overflow"
+
+  let flag_of_string str=
+    match String.lowercase_ascii str with
+    | "noop"-> NoOp
+    | "platformspecific"-> PlatformSpecific
+    | "created"-> Created
+    | "updated"-> Updated
+    | "removed"-> Removed
+    | "renamed"-> Renamed
+    | "ownermodified"-> OwnerModified
+    | "attributemodified"-> AttributeModified
+    | "movedfrom"-> MovedFrom
+    | "movedto"-> MovedTo
+    | "isfile"-> IsFile
+    | "isdir"-> IsDir
+    | "issymlink"-> IsSymLink
+    | "link"-> Link
+    | "overflow"-> Overflow
+    | _-> failwith "flag_of_string"
+
   type t= {
     path: string;
     time: float; (* the semantic is as the same as [Unix.time ()] *)
     flags: flag array;
   }
+
+  let t_to_string t= Printf.sprintf
+  "{
+  path= %s;
+  time= %f;
+  flags= [|%s|];\n}"
+  t.path
+  t.time
+  (t.flags
+    |> Array.map flag_to_string
+    |> Array.to_list
+    |> String.concat "; ")
 
   type callback= t array -> unit
 end

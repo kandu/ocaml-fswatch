@@ -41,6 +41,9 @@ module Event : sig
     time : float;
     flags : flag array;
   }
+
+  val t_to_string : t -> string
+
   type callback = t array -> unit
 end
 
