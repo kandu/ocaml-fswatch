@@ -22,7 +22,7 @@ synopsis: "Virtual package relying on libfswatch installation"
 description: "This package can install only if the libfswatch is available on the system"
 
 extra-files: [
-  "test.c" "md5=10ca381a34acb820dbaf7dffcbe8ae35"
+  "test.c" "md5=76de29f84e4438235abc7ce83423b545"
 ]
 
 flags: [conf]
