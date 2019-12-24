@@ -153,11 +153,23 @@ module Event = struct
     | "overflow"-> Overflow
     | _-> failwith "flag_of_string"
 
+  type raw= {
+    path: string;
+    time: float; (* the semantic is as the same as [Unix.time ()] *)
+    flags: int array;
+  }
+
   type t= {
     path: string;
     time: float; (* the semantic is as the same as [Unix.time ()] *)
     flags: flag array;
   }
+
+  let t_of_raw (raw:raw)=
+    { path= raw.path;
+      time= raw.time;
+      flags= Array.map flag_of_int raw.flags
+    }
 
   let t_to_string t= Printf.sprintf
   "{

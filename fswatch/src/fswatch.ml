@@ -38,7 +38,7 @@ end
 
 type handle= {
   session: nativeint;
-  callback: Stub.Event.callback;
+  callback: Event.callback;
   mutable alive: bool;
   mutable last_status: Status.t;
 }
@@ -47,6 +47,7 @@ let sessions= SessionMap.create 0
 
 let init_library ()=
   let callback session events=
+    let events= Array.map Event.t_of_raw events in
     match SessionMap.find sessions session with
     | handle-> handle.callback events
     | exception Not_found-> ()
