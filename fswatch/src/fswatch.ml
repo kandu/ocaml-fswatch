@@ -85,6 +85,7 @@ let set_follow_symlinks handle follow=
     |> Stub.Status.t_of_int
 
 let add_event_type_filter handle filter=
+  let filter = Stub.Filter.event_type_filter_to_raw  filter in
   handle.last_status <- Stub.FSW.add_event_type_filter handle.session filter
     |> Stub.Status.t_of_int
 

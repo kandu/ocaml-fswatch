@@ -266,9 +266,17 @@ module Filter = struct
     extended: bool;
   }
 
+  type event_type_filter_raw= {
+    flag: int;
+  }
+
   type event_type_filter= {
     flag: Event.flag;
   }
+
+  let event_type_filter_to_raw filter= ({
+    flag=  Event.flag_to_int filter.flag;
+  }:event_type_filter_raw)
 end
 
 module FSW = struct
@@ -285,7 +293,7 @@ module FSW = struct
   external set_recursive: handle -> bool -> status= "fsw_set_recursive_stub"
   external set_directory_only: handle -> bool -> status= "fsw_set_directory_only_stub"
   external set_follow_symlinks: handle-> bool -> status= "fsw_set_follow_symlinks_stub"
-  external add_event_type_filter: handle -> Filter.event_type_filter -> status= "fsw_add_event_type_filter_stub"
+  external add_event_type_filter: handle -> Filter.event_type_filter_raw -> status= "fsw_add_event_type_filter_stub"
   external add_filter: handle -> Filter.cmonitor_filter -> status= "fsw_add_filter_stub"
   external start_monitor: handle -> status= "fsw_start_monitor_stub"
   external stop_monitor: handle -> status= "fsw_stop_monitor_stub"
