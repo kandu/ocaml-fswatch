@@ -62,6 +62,44 @@ module Status = struct
     if n = 1 lsl 13 then FSW_ERR_UNKNOWN_VALUE           else
     if n = 1 lsl 14 then FSW_ERR_INVALID_PROPERTY        else
     failwith "status_of_int"
+
+  let t_to_string= function
+    | FSW_OK-> "FSW_OK"
+    | FSW_ERR_UNKNOWN_ERROR-> "FSW_ERR_UNKNOWN_ERROR"
+    | FSW_ERR_SESSION_UNKNOWN-> "FSW_ERR_SESSION_UNKNOWN"
+    | FSW_ERR_MONITOR_ALREADY_EXISTS-> "FSW_ERR_MONITOR_ALREADY_EXISTS"
+    | FSW_ERR_MEMORY-> "FSW_ERR_MEMORY"
+    | FSW_ERR_UNKNOWN_MONITOR_TYPE-> "FSW_ERR_UNKNOWN_MONITOR_TYPE"
+    | FSW_ERR_CALLBACK_NOT_SET-> "FSW_ERR_CALLBACK_NOT_SET"
+    | FSW_ERR_PATHS_NOT_SET-> "FSW_ERR_PATHS_NOT_SET"
+    | FSW_ERR_MISSING_CONTEXT-> "FSW_ERR_MISSING_CONTEXT"
+    | FSW_ERR_INVALID_PATH-> "FSW_ERR_INVALID_PATH"
+    | FSW_ERR_INVALID_CALLBACK-> "FSW_ERR_INVALID_CALLBACK"
+    | FSW_ERR_INVALID_LATENCY-> "FSW_ERR_INVALID_LATENCY"
+    | FSW_ERR_INVALID_REGEX-> "FSW_ERR_INVALID_REGEX"
+    | FSW_ERR_MONITOR_ALREADY_RUNNING-> "FSW_ERR_MONITOR_ALREADY_RUNNING"
+    | FSW_ERR_UNKNOWN_VALUE-> "FSW_ERR_UNKNOWN_VALUE"
+    | FSW_ERR_INVALID_PROPERTY-> "FSW_ERR_INVALID_PROPERTY"
+
+  let t_of_string str=
+    match String.lowercase_ascii str with
+    | "fsw_ok"-> FSW_OK
+    | "fsw_err_unknown_error"-> FSW_ERR_UNKNOWN_ERROR
+    | "fsw_err_session_unknown"-> FSW_ERR_SESSION_UNKNOWN
+    | "fsw_err_monitor_already_exists"-> FSW_ERR_MONITOR_ALREADY_EXISTS
+    | "fsw_err_memory"-> FSW_ERR_MEMORY
+    | "fsw_err_unknown_monitor_type"-> FSW_ERR_UNKNOWN_MONITOR_TYPE
+    | "fsw_err_callback_not_set"-> FSW_ERR_CALLBACK_NOT_SET
+    | "fsw_err_paths_not_set"-> FSW_ERR_PATHS_NOT_SET
+    | "fsw_err_missing_context"-> FSW_ERR_MISSING_CONTEXT
+    | "fsw_err_invalid_path"-> FSW_ERR_INVALID_PATH
+    | "fsw_err_invalid_callback"-> FSW_ERR_INVALID_CALLBACK
+    | "fsw_err_invalid_latency"-> FSW_ERR_INVALID_LATENCY
+    | "fsw_err_invalid_regex"-> FSW_ERR_INVALID_REGEX
+    | "fsw_err_monitor_already_running"-> FSW_ERR_MONITOR_ALREADY_RUNNING
+    | "fsw_err_unknown_value"-> FSW_ERR_UNKNOWN_VALUE
+    | "fsw_err_invalid_property"-> FSW_ERR_INVALID_PROPERTY
+    | _-> failwith "t_of_string"
 end
 
 module Event = struct

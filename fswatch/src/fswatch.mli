@@ -16,6 +16,9 @@ module Status : sig
     | FSW_ERR_MONITOR_ALREADY_RUNNING
     | FSW_ERR_UNKNOWN_VALUE
     | FSW_ERR_INVALID_PROPERTY
+
+  val t_to_string : t -> string
+  val t_of_string : string -> t
 end
 
 module Event : sig
