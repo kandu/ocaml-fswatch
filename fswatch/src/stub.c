@@ -37,6 +37,7 @@ value of_fsw_cevent(fsw_cevent const * const cevent) {
 }
 
 void cevent_callback(fsw_cevent const * const cevents, const unsigned int cevent_num, void *cdata) {
+    caml_c_thread_register();
     CAMLparam0();
     CAMLlocal2(session, events);
     caml_acquire_runtime_system();
@@ -47,6 +48,7 @@ void cevent_callback(fsw_cevent const * const cevents, const unsigned int cevent
     }
     caml_callback2(*caml_named_value("callback"), session, events);
     caml_release_runtime_system();
+    caml_c_thread_unregister();
     CAMLreturn0;
 }
 
@@ -137,7 +139,8 @@ CAMLprim value fsw_add_filter_stub (value handle, value monitor_filter) {
     CAMLparam2(handle, monitor_filter);
     FSW_HANDLE session= (void*)Nativeint_val(handle);
     fsw_cmonitor_filter cmonitor_filter;
-    cmonitor_filter.text= String_val(Field(monitor_filter, 0));
+    cmonitor_filter.text= (char*)String_val(Field(monitor_filter, 0));
+    // this text will be assigned to std::string and discarded in fsw_add_filter, so it's safe to cast it to (char*) here
     cmonitor_filter.type= Int_val(Field(monitor_filter, 1));
     cmonitor_filter.case_sensitive= Int_val(Field(monitor_filter, 2));
     cmonitor_filter.extended= Int_val(Field(monitor_filter, 3));
