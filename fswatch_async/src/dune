@@ -1,0 +1,6 @@
+(library
+  (name fswatch_async)
+  (public_name fswatch_async)
+  (flags (:standard -safe-string))
+  (libraries fswatch async_unix)
+  )
