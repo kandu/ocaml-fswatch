@@ -4,5 +4,5 @@
   (flags (:standard -safe-string))
   (libraries threads)
   (c_names stub)
-  (c_flags (-I/usr/local/include/libfswatch/c -I/usr/include/libfswatch/c))
-  (c_library_flags (-lfswatch)))
+  (c_flags (:include inc_cflags))
+  (c_library_flags (:include inc_libs)))
