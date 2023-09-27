@@ -1,7 +1,7 @@
 11-0.1.3 (2023-09-26)
 ----------------------
 
-compatible with silicon mac
+compatible with silicon mac, fedora, bsd systems
 
 11-0.1.2 (2022-10-14)
 ----------------------
