@@ -7,7 +7,6 @@
  * This file is a part of ocaml-fswatch.
  */
 
-
 #include <libfswatch.h>
 
 #define CAML_NAME_SPACE
@@ -20,6 +19,30 @@
 #include <caml/intext.h>
 #include <caml/threads.h>
 #include <stdint.h>
+#include <pthread.h>
+
+static pthread_key_t ocaml_c_thread_key;
+static pthread_once_t ocaml_c_thread_key_once = PTHREAD_ONCE_INIT;
+
+static void fsw_on_thread_exit(void *key) {
+    caml_c_thread_unregister();
+}
+
+void fsw_make_key() {
+    pthread_key_create(&ocaml_c_thread_key, fsw_on_thread_exit);
+}
+
+void fsw_register_thread() {
+    static int initialized = 1;
+    void *ptr;
+
+    pthread_once(&ocaml_c_thread_key_once, fsw_make_key);
+
+    if ((ptr = pthread_getspecific(ocaml_c_thread_key)) == NULL) {
+        pthread_setspecific(ocaml_c_thread_key, (void *)&initialized);
+        caml_c_thread_register();
+    }
+}
  
 value of_fsw_cevent(fsw_cevent const * const cevent) {
     CAMLparam0();
@@ -37,8 +60,8 @@ value of_fsw_cevent(fsw_cevent const * const cevent) {
 }
 
 void cevent_callback(fsw_cevent const * const cevents, const unsigned int cevent_num, void *cdata) {
+    fsw_register_thread();
     caml_acquire_runtime_system();
-    caml_c_thread_register();
     CAMLparam0();
     CAMLlocal2(session, events);
     session= caml_copy_nativeint((intnat)cdata);
@@ -47,7 +70,6 @@ void cevent_callback(fsw_cevent const * const cevents, const unsigned int cevent
         Store_field(events, i, of_fsw_cevent(cevents + i));
     }
     caml_callback2(*caml_named_value("callback"), session, events);
-    caml_c_thread_unregister();
     caml_release_runtime_system();
     CAMLreturn0;
 }
