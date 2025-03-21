@@ -38,7 +38,6 @@ value of_fsw_cevent(fsw_cevent const * const cevent) {
 
 void cevent_callback(fsw_cevent const * const cevents, const unsigned int cevent_num, void *cdata) {
     caml_acquire_runtime_system();
-    caml_c_thread_register();
     CAMLparam0();
     CAMLlocal2(session, events);
     session= caml_copy_nativeint((intnat)cdata);
@@ -47,7 +46,6 @@ void cevent_callback(fsw_cevent const * const cevents, const unsigned int cevent
         Store_field(events, i, of_fsw_cevent(cevents + i));
     }
     caml_callback2(*caml_named_value("callback"), session, events);
-    caml_c_thread_unregister();
     caml_release_runtime_system();
     CAMLreturn0;
 }
