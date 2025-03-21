@@ -1,3 +1,9 @@
+11-0.1.5 (2025-03-21)
+----------------------
+
+drop the workaround for the extra-thread malbehavior of fswatch
+
+
 11-0.1.4 (2023-12-06)
 ----------------------
 
