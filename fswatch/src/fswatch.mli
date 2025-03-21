@@ -1,3 +1,13 @@
+(*
+ * fswatch.mli
+ * -----------
+ * Copyright : (c) 2019 - 2025, ZAN DoYe <zandoye@gmail.com>
+ * Licence   : MIT
+ *
+ * This file is a part of ocaml-fswatch.
+ *)
+
+
 module Status : sig
   type t =
     | FSW_OK

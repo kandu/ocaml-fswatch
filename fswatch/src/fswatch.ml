@@ -1,7 +1,7 @@
 (*
  * fswatch.ml
  * -----------
- * Copyright : (c) 2019, ZAN DoYe <zandoye@gmail.com>
+ * Copyright : (c) 2019 - 2025, ZAN DoYe <zandoye@gmail.com>
  * Licence   : MIT
  *
  * This file is a part of ocaml-fswatch.
