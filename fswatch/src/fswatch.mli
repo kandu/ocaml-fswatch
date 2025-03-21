@@ -38,6 +38,7 @@ module Event : sig
     | IsSymLink
     | Link
     | Overflow
+    | CloseWrite
 
   type t = {
     path : string;

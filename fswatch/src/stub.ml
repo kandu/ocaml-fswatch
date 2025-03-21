@@ -119,6 +119,7 @@ module Event = struct
     | IsSymLink
     | Link
     | Overflow
+    | CloseWrite
 
   let flag_to_int= function
     | NoOp              -> 0
@@ -136,6 +137,7 @@ module Event = struct
     | IsSymLink         -> 1 lsl 11
     | Link              -> 1 lsl 12
     | Overflow          -> 1 lsl 13
+    | CloseWrite          -> 1 lsl 14
 
   let flag_of_int n=
     if n = 0        then NoOp              else
@@ -153,6 +155,7 @@ module Event = struct
     if n = 1 lsl 11 then IsSymLink         else
     if n = 1 lsl 12 then Link              else
     if n = 1 lsl 13 then Overflow          else
+    if n = 1 lsl 14 then CloseWrite        else
       failwith "flag_of_int"
 
   let flag_to_string= function
@@ -171,6 +174,7 @@ module Event = struct
     | IsSymLink-> "IsSymLink"
     | Link-> "Link"
     | Overflow-> "Overflow"
+    | CloseWrite-> "CloseWrite"
 
   let flag_of_string str=
     match String.lowercase_ascii str with
@@ -189,6 +193,7 @@ module Event = struct
     | "issymlink"-> IsSymLink
     | "link"-> Link
     | "overflow"-> Overflow
+    | "closewrite"-> CloseWrite
     | _-> failwith "flag_of_string"
 
   type raw= {
